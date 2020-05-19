@@ -38,4 +38,22 @@ CREATE DATABASE test;
     );
     ALTER TABLE couriers AUTO_INCREMENT = 3001;
 
+    CREATE TABLE orders(
+        orderID int PRIMARY KEY AUTO_INCREMENT,
+        order_time date,
+        payment_type varchar(255) NOT NULL,
+        delivery_address varchar(255) NOT NULL,
+        delivery_type varchar(255),
+        note varchar(255),
+        status varchar(255),
+        is_accepted boolean
+    );
+
+    CREATE TABLE is_assigned(
+        orderID int NOT NULL PRIMARY KEY REFERENCES orders(orderID) ON DELETE CASCADE,
+        courierID int REFERENCES couriers(courierID) ON DELETE CASCADE ON UPDATE CASCADE ,
+        sellerID int NOT NULL REFERENCES flowersellers(sellerID) ON DELETE CASCADE
+    );
+
+
 

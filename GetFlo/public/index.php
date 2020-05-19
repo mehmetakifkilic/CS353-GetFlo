@@ -1,5 +1,6 @@
 <?php include "templates/header.php";
 require "../common.php";
+session_start();
 if (isset($_POST['submitCustomer'])) {
     require "../config.php";
 
@@ -185,7 +186,6 @@ if (isset($_POST['submitCourier'])) {
 if (isset($_POST['submitLogin'])) {
     try {
         require "../config.php";
-        require "../common.php";
 
         $connection = new PDO($dsn, $username, $password, $options);
 
@@ -206,16 +206,17 @@ if (isset($_POST['submitLogin'])) {
         foreach ($result as $row) {
             $type = $row['type'];
         }
+        $_SESSION['accountID'] = $row['ID'];
         if($type == "Customer")
-            header("Location: /customermainpage.php");
+            header("Location: ./customermainpage.php");
         if($type == "Seller")
-            header("Location: /sellermainpage.php");
+            header("Location: ./sellermainpage.php");
         if($type == "Courier")
-            header("Location: /couriermainpage.php");
+            header("Location: ./couriermainpage.php");
         if($type == "Service")
-            header("Location: /servicemainpage.php");
+            header("Location: ./servicemainpage.php");
         if($type == "Grower")
-            header("Location: /growermainpage.php");
+            header("Location: ./growermainpage.php");
         else echo "Invalid Username and Password!";
     } catch(PDOException $error) {
         echo $sql . "<br>" . $error->getMessage();
